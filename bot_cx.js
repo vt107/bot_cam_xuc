@@ -116,7 +116,7 @@ class fbJob {
     }
 
     scroll(amount) {
-        console.log('scroll ', amount);
+        // console.log('scroll ', amount);
         this.fbPage.evaluate(amount => {
             window.scrollBy(0, amount);
         }, amount);
@@ -222,8 +222,8 @@ class fbJob {
                 });
 
                 let randomValue = random(10, 1000);
-                if (randomValue % 21 == 0) {
-                    let delay = random(60, 3 * 60);
+                if (randomValue % 13 == 0) {
+                    let delay = random(60, 2 * 60);
                     // console.log('insert big delay', delay);
                     tasks.push({
                         type: taskTypes.WAIT,
@@ -239,7 +239,7 @@ class fbJob {
     }
 
     async handleTask() {
-        console.log('Thực thi lượt mới');
+        // console.log('Thực thi lượt mới');
 
         let { tasks } = this;
         if (this.stop) return;
