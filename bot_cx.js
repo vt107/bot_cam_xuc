@@ -57,19 +57,41 @@ class fbJob {
     }
 
     async init() {
-        let args = ['--disable-setuid-sandbox', '--no-sandbox'];
+        let args = [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-infobars',
+            '--ignore-certifcate-errors',
+            '--ignore-certifcate-errors-spki-list',
+        ];
 
         this.browser = await puppeteer.launch({
             args,
             // headless: false,
+            devtools: true,
             headless: 'shell',
         });
 
+        const iPhone12 = {
+            name: 'iPhone 12',
+            userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1',
+            viewport: {
+                width: 390,
+                height: 844,
+                deviceScaleFactor: 3,
+                isMobile: true,
+                hasTouch: true,
+                isLandscape: false,
+            },
+        };
+
         this.fbPage = await this.browser.newPage();
 
+        await this.fbPage.emulate(iPhone12);
+
         await this.fbPage.setViewport({
-            width: 390,
-            height: 844,
+            width: 400,
+            height: 751,
             deviceScaleFactor: 1,
         });
 
@@ -79,15 +101,7 @@ class fbJob {
         console.log('Đang đăng nhập');
         await this.fbPage.setCookie(...cookieStringToObj(this.cookie));
 
-        await this.fbPage.setUserAgent(
-            'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1'
-        );
 
-        await this.fbPage.setExtraHTTPHeaders({
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36',
-            'upgrade-insecure-requests': '1',
-            'viewport-width': '390'
-        })
 
         // let newCookie = '';
         // this.fbPage.on('response', async (response) => {
@@ -109,9 +123,9 @@ class fbJob {
 
         this.fbPage.on('pageerror', () => {
             // console.error('fetchData pageerror', error);
-        })
+        });
 
-        // console.log('opening facebook');
+        console.log('opening facebook');
         await this.fbPage.goto('https://m.facebook.com/', { waitUntil: 'networkidle0' });
     }
 
@@ -187,7 +201,7 @@ class fbJob {
                     break;
                 }
             } catch (e) {
-                // console.error('Like lỗi', likeTarget, e.message);
+                console.error('Like lỗi', likeTarget, e.message);
             }
         }
     }
@@ -231,7 +245,7 @@ class fbJob {
                     });
                 }
 
-                // console.log('pushed task: ', tasks.length);
+                console.log('pushed task: ', tasks.length);
             }
         }, 3000);
 
@@ -239,7 +253,7 @@ class fbJob {
     }
 
     async handleTask() {
-        // console.log('Thực thi lượt mới');
+        console.log('Thực thi lượt mới');
 
         let { tasks } = this;
         if (this.stop) return;
