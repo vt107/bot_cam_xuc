@@ -174,7 +174,7 @@ class fbJob {
             await this.browser.close();
             setTimeout(() => {
                 this.start();
-            }, random(10000, 20000));
+            }, random(5_000, 15_000));
             return;
         } else {
             console.log(`Thấy ${likeButtons.length} nút like`);
@@ -211,7 +211,7 @@ class fbJob {
         await this.init();
 
         console.log('Đang khởi động')
-        await wait(1, 10);
+        await wait(1, 5);
 
         // Check current task
         this.taskInterval = setInterval(() => {
@@ -224,7 +224,7 @@ class fbJob {
             if (tasks.length === 0) {
                 // console.log('tasks empty, pushing new...')
 
-                for (let i = 0; i <= random(3, 7); i++) {
+                for (let i = 0; i <= random(2, 5); i++) {
                     tasks.push({
                         type: taskTypes.SCROLL,
                         amount: random(-300, 400)
