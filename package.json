@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bot_cx.js"
+    "start": "node bot_cx.js",
+    "friends": "node get_friends.js"
   },
   "author": "",
   "license": "ISC",

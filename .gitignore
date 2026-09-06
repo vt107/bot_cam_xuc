@@ -1,4 +1,12 @@
 cookie.txt
+friends.json
+debug_post.html
+debug_friends.html
+friend.txt
+*.friends.html
 package-lock.json
 node_modules
 .idea
+
+# ~/.gitignore_global bỏ qua "docs/" — dự án này cần commit thư mục docs
+!docs/
